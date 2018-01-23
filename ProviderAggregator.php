@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -49,16 +47,16 @@ class ProviderAggregator implements Geocoder
      * @param callable|null $decider
      * @param int           $limit
      */
-    public function __construct(callable $decider = null, int $limit = Geocoder::DEFAULT_RESULT_LIMIT)
+    public function __construct(callable $decider = null, $limit = Geocoder::DEFAULT_RESULT_LIMIT)
     {
         $this->limit = $limit;
-        $this->decider = $decider ?? __CLASS__.'::getProvider';
+        $this->decider = !empty($decider) ? $decider :  __CLASS__.'::getProvider';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query): Collection
+    public function geocodeQuery(GeocodeQuery $query)
     {
         if (null === $query->getLimit()) {
             $query = $query->withLimit($this->limit);
@@ -70,7 +68,7 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query): Collection
+    public function reverseQuery(ReverseQuery $query)
     {
         if (null === $query->getLimit()) {
             $query = $query->withLimit($this->limit);
@@ -82,7 +80,7 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function getName(): string
+    public function getName()
     {
         return 'provider_aggregator';
     }
@@ -90,7 +88,7 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function geocode(string $value): Collection
+    public function geocode($value)
     {
         return $this->geocodeQuery(GeocodeQuery::create($value)
             ->withLimit($this->limit));
@@ -99,7 +97,7 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function reverse(float $latitude, float $longitude): Collection
+    public function reverse($latitude, $longitude)
     {
         return $this->reverseQuery(ReverseQuery::create(new Coordinates($latitude, $longitude))
             ->withLimit($this->limit));
@@ -112,7 +110,7 @@ class ProviderAggregator implements Geocoder
      *
      * @return ProviderAggregator
      */
-    public function registerProvider(Provider $provider): self
+    public function registerProvider(Provider $provider)
     {
         $this->providers[$provider->getName()] = $provider;
 
@@ -126,7 +124,7 @@ class ProviderAggregator implements Geocoder
      *
      * @return ProviderAggregator
      */
-    public function registerProviders(array $providers = []): self
+    public function registerProviders(array $providers = [])
     {
         foreach ($providers as $provider) {
             $this->registerProvider($provider);
@@ -142,10 +140,10 @@ class ProviderAggregator implements Geocoder
      *
      * @return ProviderAggregator
      */
-    public function using(string $name): self
+    public function using($name)
     {
         if (!isset($this->providers[$name])) {
-            throw ProviderNotRegistered::create($name ?? '', $this->providers);
+            throw ProviderNotRegistered::create(!empty($name) ? $name : '', $this->providers);
         }
 
         $this->provider = $this->providers[$name];
@@ -158,7 +156,7 @@ class ProviderAggregator implements Geocoder
      *
      * @return Provider[]
      */
-    public function getProviders(): array
+    public function getProviders()
     {
         return $this->providers;
     }
@@ -174,7 +172,7 @@ class ProviderAggregator implements Geocoder
      *
      * @throws ProviderNotRegistered
      */
-    private static function getProvider($query, array $providers, Provider $currentProvider = null): Provider
+    private static function getProvider($query, array $providers, Provider $currentProvider = null)
     {
         if (null !== $currentProvider) {
             return $currentProvider;

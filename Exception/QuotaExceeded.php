@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -17,6 +15,6 @@ namespace Geocoder\Exception;
  *
  * @author Max V. Kovrigovich <mvk@tut.by>
  */
-final class QuotaExceeded extends \RuntimeException implements Exception
+class QuotaExceeded extends \RuntimeException implements Exception
 {
 }

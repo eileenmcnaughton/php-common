@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -25,7 +23,7 @@ final class Gpx extends AbstractDumper implements Dumper
      *
      * @return string
      */
-    public function dump(Location $location): string
+    public function dump(Location $location)
     {
         $gpx = sprintf(<<<'GPX'
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>

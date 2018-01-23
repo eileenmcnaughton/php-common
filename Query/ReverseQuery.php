@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -18,7 +16,7 @@ use Geocoder\Model\Coordinates;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class ReverseQuery implements Query
+class ReverseQuery implements Query
 {
     /**
      * @var Coordinates
@@ -64,7 +62,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public static function fromCoordinates($latitude, $longitude): self
+    public static function fromCoordinates($latitude, $longitude)
     {
         return new self(new Coordinates($latitude, $longitude));
     }
@@ -74,7 +72,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public function withCoordinates(Coordinates $coordinates): self
+    public function withCoordinates(Coordinates $coordinates)
     {
         $new = clone $this;
         $new->coordinates = $coordinates;
@@ -87,7 +85,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public function withLimit(int $limit): self
+    public function withLimit($limit)
     {
         $new = clone $this;
         $new->limit = $limit;
@@ -100,7 +98,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public function withLocale(string $locale): self
+    public function withLocale($locale)
     {
         $new = clone $this;
         $new->locale = $locale;
@@ -114,7 +112,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public function withData(string $name, $value): self
+    public function withData($name, $value)
     {
         $new = clone $this;
         $new->data[$name] = $value;
@@ -125,7 +123,7 @@ final class ReverseQuery implements Query
     /**
      * @return Coordinates
      */
-    public function getCoordinates(): Coordinates
+    public function getCoordinates()
     {
         return $this->coordinates;
     }
@@ -133,7 +131,7 @@ final class ReverseQuery implements Query
     /**
      * @return int
      */
-    public function getLimit(): int
+    public function getLimit()
     {
         return $this->limit;
     }
@@ -152,7 +150,7 @@ final class ReverseQuery implements Query
      *
      * @return mixed
      */
-    public function getData(string $name, $default = null)
+    public function getData($name, $default = null)
     {
         if (!array_key_exists($name, $this->data)) {
             return $default;
@@ -164,7 +162,7 @@ final class ReverseQuery implements Query
     /**
      * @return array
      */
-    public function getAllData(): array
+    public function getAllData()
     {
         return $this->data;
     }

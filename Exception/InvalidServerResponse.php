@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -25,7 +23,7 @@ final class InvalidServerResponse extends \RuntimeException implements Exception
      *
      * @return InvalidServerResponse
      */
-    public static function create(string $query, int $code = 0): self
+    public static function create($query, $code = 0)
     {
         return new self(sprintf('The geocoder server returned an invalid response (%d) for query "%s". We could not parse it.', $code, $query));
     }
@@ -35,7 +33,7 @@ final class InvalidServerResponse extends \RuntimeException implements Exception
      *
      * @return InvalidServerResponse
      */
-    public static function emptyResponse(string $query): self
+    public static function emptyResponse($query)
     {
         return new self(sprintf('The geocoder server returned an empty response for query "%s".', $query));
     }
